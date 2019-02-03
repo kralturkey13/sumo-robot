@@ -1,0 +1,65 @@
+#define Onsensor 3
+#define Solsensor 2
+#define sagcizgisensoru 4
+#define solcizgisensoru 5
+
+#define motorr1 6
+#define motorr2 7
+#define motorl1 8
+#define motorl2 9
+void setup() {
+  pinMode(Onsensor,INPUT);
+  pinMode(Solsensor,INPUT);
+  pinMode(sagcizgisensoru,INPUT);
+  pinMode(solcizgisensoru,INPUT);
+  
+  pinMode(motorr1,OUTPUT);
+  pinMode(motorr2,OUTPUT);
+  pinMode(motorl1,OUTPUT);
+  pinMode(motorl2,OUTPUT);
+}
+void ileri(){
+  digitalWrite(motorr1,HIGH);
+  digitalWrite(motorr2,LOW);
+  digitalWrite(motorl1,HIGH);
+  digitalWrite(motorl2,LOW);
+}
+void sol(){
+  digitalWrite(motorr1,HIGH);
+  digitalWrite(motorr2,LOW);
+  digitalWrite(motorl1,LOW);
+  digitalWrite(motorl2,HIGH);
+}
+void sag(){
+  digitalWrite(motorr1,LOW);
+  digitalWrite(motorr2,HIGH);
+  digitalWrite(motorl1,HIGH);
+  digitalWrite(motorl2,LOW);
+}
+void geri(){
+  digitalWrite(motorr1,LOW);
+  digitalWrite(motorr2,HIGH);
+  digitalWrite(motorl1,LOW);
+  digitalWrite(motorl2,HIGH);
+}
+void loop() {
+  if (digitalRead(sagcizgisensoru)==0 || digitalRead(solcizgisensoru)==0)
+  {
+    if(digitalRead(Onsensor)==0 && digitalRead(Solsensor)==1){
+      ileri();
+    }
+    if(digitalRead(Onsensor)==1 && digitalRead(Solsensor)==0){
+      sol();
+    }
+    if(digitalRead(Onsensor)==1 && digitalRead(Solsensor)==1){
+      sag();
+    }
+  }
+  else 
+  {
+    geri();
+    delay(1000);
+    sol();
+    delay(400);
+  }
+}
